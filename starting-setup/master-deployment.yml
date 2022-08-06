@@ -1,0 +1,42 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: backend
+spec:
+  selector:
+    app: second-app # Best practice to declare services first to then be attached automatically
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080 # Container port to be exposed 
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+spec:
+  replicas: 1
+  selector:
+    # matchLabels:
+    #   app: second-app
+    #   tier: backend
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - second-app
+          - fisrt-app
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+    spec:
+      containers:
+        - name: second-nodejs
+          image: 8cox/kube-first-app:2
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"

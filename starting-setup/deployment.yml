@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: second-app
+      tier: backend
+    # matchExpressions:
+    #   - key: app
+    #     operator: In
+    #     values:
+    #       - second-app
+    #       - fisrt-app
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+    spec:
+      containers:
+        - name: second-nodejs
+          image: 8cox/kube-first-app:2
+          # imagePullPolicy: Always 
+          livenessProbe: # To customize  health check of pod
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 5
+          resources: # This helps to schedule the container to a node that has available resources for your Pod, and also so that your Pod does not use resources that other Pods needs 
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          
