@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - name: users
+        image: 8cox/kube-users:latest
+        env:
+          - name: AUTH_ADDRESS
+            # value: localhost  # to comunicate to auth container (this works when 2 containers are in the same pod)
+            value: "auth-service.default"  # DNS name to auth service, would be same as putting CLusterIP of that service
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

@@ -13,3 +13,6 @@ deploy_cfm:
 
 deploy_all:
 	kubectl apply -f=deployment.yml,service.yml,host-pv.yml,host-pvc.yml,configmap.yml
+
+clean:
+	kubectl delete -f=deployment.yml,service.yml,host-pv.yml,host-pvc.yml,configmap.yml
