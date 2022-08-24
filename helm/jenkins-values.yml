@@ -1,0 +1,4 @@
+# For minikube, set this to NodePort, elsewhere use LoadBalancer
+# Use ClusterIP if your setup includes ingress controller
+controller:
+  serviceType: LoadBalancer
