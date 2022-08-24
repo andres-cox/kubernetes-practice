@@ -32,6 +32,9 @@ jenkins_manifest:
 show_values:
 	helm show values jenkins/jenkins
 
+jenkins_uninstall:
+	helm uninstall demo-jenkins
+
 # pull helm package
 pull_chart:
 	helm pull jenkins/jenkins
@@ -39,4 +42,3 @@ pull_chart:
 # might need to modify for latest version
 unzip_package:
 	tar zxvf jenkins-4.1.17.tgz
-
